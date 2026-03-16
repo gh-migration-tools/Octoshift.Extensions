@@ -1,0 +1,39 @@
+name: Publish NuGet
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  NUGET_PACKAGES_DIR: ./nupkgs
+  NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NUGET_FEED: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+
+jobs:
+  publish-nuget:
+    if: github.event.base_ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Build and test solution
+        uses: ./.github/actions/build-and-test-solution
+        with:
+          nuget-auth-token: $NUGET_AUTH_TOKEN
+          nuget-feed: $NUGET_FEED
+
+      - name: Pack NuGet package
+        run: dotnet pack --configuration Release --no-build --output $NUGET_PACKAGES_DIR
+
+      - name: Publish NuGet package and symbols
+        run: |
+          dotnet nuget push $NUGET_PACKAGES_DIR/*.nupkg \
+            --source $NUGET_FEED \
+            --api-key $NUGET_AUTH_TOKEN

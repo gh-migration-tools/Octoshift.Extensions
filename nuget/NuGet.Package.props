@@ -1,0 +1,44 @@
+<Project>
+    <PropertyGroup>
+        <Configurations>Debug;Release</Configurations>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <IsPackable>true</IsPackable>
+        <NoWarn>$(NoWarn)</NoWarn>
+
+        <!-- Central version prefix - applies to all nuget packages. -->
+        <VersionPrefix>0.0.1</VersionPrefix>
+        <VersionSuffix></VersionSuffix>
+        <PackageVersion Condition="'$(VersionSuffix)' != ''">$(VersionPrefix)-$(VersionSuffix)</PackageVersion>
+        <PackageVersion Condition="'$(VersionSuffix)' == ''">$(VersionPrefix)</PackageVersion>
+
+        <!-- Package validation. Baseline Version should be lower or equal to current version. -->
+        <PackageValidationBaselineVersion>0.1.0</PackageValidationBaselineVersion>
+
+        <!-- Default description and tags. Packages can override. -->
+        <Authors>gh-migration-tools</Authors>
+        <Product>Octoshift.Extensions</Product>
+        <Description>Extended classes for the Octoshift library.</Description>
+        <PackageTags>GitHub, Octoshift</PackageTags>
+        <PackageId>$(AssemblyName)</PackageId>
+
+        <!-- Required license, copyright, and repo information. Packages can override. -->
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Copyright>Copyright (c) 2026-present gh-migration-tools. All rights reserved.</Copyright>
+        <PackageProjectUrl>https://github.com/gh-migration-tools/Octoshift.Extensions/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/gh-migration-tools/Octoshift.Extensions/</RepositoryUrl>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+        <!-- Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+        <!-- Include the XML documentation file in the NuGet package. -->
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+
+  <ItemGroup>
+    <!-- SourceLink allows step-through debugging for source hosted on GitHub. -->
+    <!-- https://github.com/dotnet/sourcelink -->
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
+</Project>

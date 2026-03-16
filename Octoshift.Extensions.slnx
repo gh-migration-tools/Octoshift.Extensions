@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Octoshift.Extensions/Octoshift.Extensions.csproj" Id="d6791a24-aceb-4b0c-95ce-136fcc98aaa5" />
+  </Folder>
+</Solution>

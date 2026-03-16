@@ -1,0 +1,42 @@
+name: Build and test
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'tests/**'
+  pull_request:
+    branches:
+      - main
+
+# # Permissions for the 'Publish test results' action
+# permissions:
+#   contents: read
+#   packages: read
+#   issues: read
+#   checks: write
+#   pull-requests: write
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Build and test solution
+        uses: ./.github/actions/build-and-test-solution
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUGET_FEED: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+        with:
+          nuget-auth-token: $NUGET_AUTH_TOKEN
+          nuget-feed: $NUGET_FEED
+
+    #   - name: Publish test results
+    #     uses: EnricoMi/publish-unit-test-result-action@v2
+    #     with:
+    #       files: test-results/**/*.trx

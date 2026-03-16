@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <NoWarn>$(NoWarn);CA1031;CA1054;CA1055;CA1056;CS1591</NoWarn>
+    <RootNamespace>OctoshiftCLI</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <Import Project="$(RepoRoot)/nuget/NuGet.Package.props" />
+
+  <ItemGroup>
+    <PackageReference Include="Octoshift" />
+  </ItemGroup>
+
+</Project>
